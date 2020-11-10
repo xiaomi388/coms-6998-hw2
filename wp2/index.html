@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>WP2</title>
+    <link href="./wp2.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        function permissionDenied() {
+            alert("The OTP provided is invalid, permission denied.");
+        }
+        function success(){
+            var succText = "Welcome back blablabla!";
+            alert(succText);
+        }
+        $(document).ready(function(){    
+            $(".form-signin").submit(function(){
+                permissionDenied();
+            })
+        })
+    </script>
+  </head>
+
+  <body>
+    <form class="form-signin" onsubmit="return tigger()">
+      <h1 class="mb-3">WP2</h1>
+      <div class="input_text">One-Time Passcode: </div>
+      <input type="password" id="inputName" class="input_box" placeholder="OTP" size="20" required autofocus>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+      <div id="message"></div>
+    </form>
+  </body>
+</html>
