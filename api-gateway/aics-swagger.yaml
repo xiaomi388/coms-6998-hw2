@@ -1,0 +1,71 @@
+swagger: '2.0'
+info:
+  title: Smart Door API
+  description: 'Smart Door application, built during the Cloud and Big Data course at Columbia University.'
+  version: 1.0.0
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /open_door:
+    post:
+      summary: open the door
+      description: open the door
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/OpenDoorRequest'
+      responses:
+        '403':
+          description: permission denied
+          schema:
+            $ref: '#/definitions/Response'
+        '200':
+          description: successfully opened the door
+          schema:
+            $ref: '#/definitions/Response'
+  /visitors:
+    post:
+      summary: get the basic information of a visitor
+      description: get the basic information of a visitor
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/VisitorRequest'
+
+      responses:
+        '201':
+          description: updated visitor succeefully
+          schema:
+            $ref: '#/definitions/Response'
+        '409':
+          description: the face id is existed
+          schema:
+            $ref: '#/definitions/Response'
+definitions:
+  OpenDoorRequest:
+    type: object
+    properties:
+      otp:
+        type: string
+  Response:
+    type: object
+    properties:
+      error:
+        type: string
+  VisitorRequest:
+    type: object
+    properties:
+      face_id:
+        type: string
+      phone_number:
+        type: string
+      name:
+        type: string
+
