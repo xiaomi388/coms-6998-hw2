@@ -4,7 +4,21 @@
     <meta charset="utf-8">
     <title>WP2</title>
     <link href="./wp2.css" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/apigClient.js"></script>
+
     <script>
         function permissionDenied() {
             alert("The OTP provided is invalid, permission denied.");
@@ -13,21 +27,43 @@
             var succText = "Welcome back blablabla!";
             alert(succText);
         }
-        $(document).ready(function(){    
-            $(".form-signin").submit(function(){
-                permissionDenied();
-            })
-        })
+
+        function myFunction(message) {
+          var sdk = apigClientFactory.newClient({});
+          var form = document.querySelector("#formElem");
+          var otp_raw = form.querySelector('input[name="otp"]').value
+          if(otp_raw == undefined || otp_raw==""){
+            return;
+          }
+          var additionalParams = {
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers': '*',
+              'Access-Control-Allow-Methods': '*',
+              'Access-Control-Allow-Credentials': 'true'
+            }
+          };
+          var data = {
+            otp : otp_raw
+          }
+          console.log("data: ")
+          console.log(data)
+          console.log(additionalParams)
+
+          return sdk.openDoorPost({}, data, additionalParams);
+        }
     </script>
   </head>
 
   <body>
-    <form class="form-signin" onsubmit="return tigger()">
+    <!-- <form class="form-signin" id="formElem" onsubmit="return tigger()" method="POST" action="/open_door"> -->
+    <div class="form-signin" id="formElem">
       <h1 class="mb-3">WP2</h1>
       <div class="input_text">One-Time Passcode: </div>
-      <input type="password" id="inputName" class="input_box" placeholder="OTP" size="20" required autofocus>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+      <input type="password" id="inputName" class="input_box" placeholder="OTP" name="otp" size="20" required autofocus>
+      <button class="btn btn-lg btn-primary btn-block" id="submit_button" onclick="myFunction()" type="submit">Submit</button>
       <div id="message"></div>
-    </form>
+    </div>
   </body>
+
 </html>

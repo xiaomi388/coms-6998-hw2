@@ -1,21 +1,52 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
     <title>WP1</title>
     <link href="./wp1.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="./apiGateway-js-sdk/apigClient.js"></script>
+    <!-- <script>
+
+      var sdk = apigClientFactory.newClient({});
+
+    </script> -->
+    <script>
+        $(document).ready(function(){
+            $(".form-signin").submit(function(){
+              const queryString = window.location.search;
+              const urlParams = new URLSearchParams(queryString);
+              const face_id = urlParams.get('face_id');
+              console.log(face_id);
+              $("#face_id").val(face_id);
+            })
+        })
+    </script>
   </head>
 
   <body>
-    <form class="form-signin">
+    <form class="form-signin" method="POST" action="/visitors">
+      <input type = "hidden" id="face_id" name = "face_id" value = ""/>
       <h1 class="mb-3">WP1</h1>
       <div class='inputs'>
         <div class="input_text">Name &emsp;&emsp;&emsp;&emsp;&nbsp;&thinsp;&thinsp;</div>
-        <input type="text" id="inputName" class="input_box" placeholder="name" size="12" required autofocus>
+        <input type="text" id="name" class="input_box" placeholder="name" name="name" size="12" required autofocus>
       </div>
       <div class='inputs'>
         <div class="input_text">Phone Number &emsp;</div>
-        <input type="tel" id="inputPhoneNumber" class="input_box" placeholder="1234567890" pattern="[0-9]{10}" size="12" required>
+        <input type="tel" id="phone_number" class="input_box" placeholder="1234567890" name="phone_number" pattern="[0-9]{10}" size="12" required>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form>
