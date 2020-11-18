@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>WP1</title>
     <link href="./wp1.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="./apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
@@ -18,26 +18,53 @@
     <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
     <script type="text/javascript" src="./apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
     <script type="text/javascript" src="./apiGateway-js-sdk/apigClient.js"></script>
-    <!-- <script>
-
-      var sdk = apigClientFactory.newClient({});
-
-    </script> -->
     <script>
-        $(document).ready(function(){
-            $(".form-signin").submit(function(){
-              const queryString = window.location.search;
-              const urlParams = new URLSearchParams(queryString);
-              const face_id = urlParams.get('face_id');
-              console.log(face_id);
-              $("#face_id").val(face_id);
+        function success(name){
+          var succText = "Hi, " + name +"! The request has been successfully submitted.";
+          alert(succText);
+        }
+        function alreadExisted(error) {
+            alert("ERROR: " + error);
+        }
+        function phoneNumberError() {
+            alert("The phone number should be 10 digit");
+        }
+        function myFunction() {
+          var sdk = apigClientFactory.newClient({});
+          var form = document.querySelector("#formElem");
+          var name_raw = form.querySelector('input[name="name"]').value
+          var phone_number_raw = form.querySelector('input[name="phone_number"]').value
+          if(name_raw == undefined || name_raw == "" || phone_number_raw == undefined || phone_number_raw == ""){
+            return;
+          }
+
+          var pattern = /[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/
+          if(!pattern.test(phone_number_raw)){
+            return phoneNumberError();
+          }
+
+          const queryString = window.location.search;
+          const urlParams = new URLSearchParams(queryString)
+          const face_id = urlParams.get('faceId')
+
+          var data = {
+            face_id: face_id,
+            name : name_raw,
+            phone_number: phone_number_raw
+          }
+          sdk.visitorsPost({}, data, {})
+            .then((response) => {
+              return success(name_raw);
             })
-        })
+            .catch((error) => {
+              return alreadExisted(error.data.error);
+            });
+        }
     </script>
   </head>
 
   <body>
-    <form class="form-signin" method="POST" action="/visitors">
+    <div class="form-signin" id="formElem">
       <input type = "hidden" id="face_id" name = "face_id" value = ""/>
       <h1 class="mb-3">WP1</h1>
       <div class='inputs'>
@@ -48,7 +75,7 @@
         <div class="input_text">Phone Number &emsp;</div>
         <input type="tel" id="phone_number" class="input_box" placeholder="1234567890" name="phone_number" pattern="[0-9]{10}" size="12" required>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-    </form>
+      <button class="btn btn-lg btn-primary btn-block" onclick="myFunction()" type="submit">Submit</button>
+    </div>
   </body>
 </html>
