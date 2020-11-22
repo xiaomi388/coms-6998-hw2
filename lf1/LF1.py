@@ -15,10 +15,17 @@ photoS3 = "6998hw2s3"
 collection_id= 'Faces'  # Rekognition collection
 wp1 = "http://6998hw2s3frontend.s3-website-us-west-1.amazonaws.com"
 wp2 = "http://6998hw2s3frontend2.s3-website-us-west-1.amazonaws.com"
-stream_processor = ""
+stream_processor = "stream_processorHW2"
 ownerEmail = "xiaomi388@gmail.com"
-ownerPhoneNumber = "+18141111234"
-
+ownerPhoneNumber = "+16622280114"
+#Note:
+'''s3: us-east-1, 
+collection(Faces): us-east-1, 
+KVS(stream0): us-east-1, 
+KDS(data_stream0): us-east1, 
+stream processor(stream_processorHW2): us-east-1 '''
+    
+    
 #Collection Related Part
 def if_known_face(collection_face_details):
     # if_known == 1, found matched face in collections
