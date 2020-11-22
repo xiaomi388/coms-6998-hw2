@@ -23,8 +23,8 @@
         function permissionDenied() {
             alert("The OTP provided is invalid, permission denied.");
         }
-        function success(){
-            var succText = "Welcome back blablabla!";
+        function success(name){
+            var succText = "Welcome back " + name + "!";
             alert(succText);
         }
 
@@ -35,28 +35,22 @@
           if(otp_raw == undefined || otp_raw==""){
             return;
           }
-          var additionalParams = {
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Headers': '*',
-              'Access-Control-Allow-Methods': '*',
-              'Access-Control-Allow-Credentials': 'true'
-            }
-          };
           var data = {
             otp : otp_raw
           }
-          console.log("data: ")
-          console.log(data)
-          console.log(additionalParams)
-
-          return sdk.openDoorPost({}, data, additionalParams);
+          sdk.openDoorPost({}, data, {})
+          .then((response) => {
+            return success(response.data.visitor.name)
+          })
+          .catch((error) => {
+            console.log(error);
+            return permissionDenied()
+          });
         }
     </script>
   </head>
 
   <body>
-    <!-- <form class="form-signin" id="formElem" onsubmit="return tigger()" method="POST" action="/open_door"> -->
     <div class="form-signin" id="formElem">
       <h1 class="mb-3">WP2</h1>
       <div class="input_text">One-Time Passcode: </div>

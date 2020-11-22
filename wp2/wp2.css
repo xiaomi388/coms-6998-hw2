@@ -35,12 +35,11 @@ body {
     box-sizing: border-box;
   }
   .form-signin .input_box{
-    float:left;  
     font-size: 14pt;
     padding: 6px;
     box-sizing: border-box;
-    margin-top: 8px;
-    margin-bottom: 25px;
+    margin-top: 12px;
+    margin-bottom: 20px;
   }
   .form-signin input[type="password"]{
     margin-left: 10px;
