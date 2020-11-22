@@ -18,7 +18,8 @@ wp2 = "http://6998hw2s3frontend2.s3-website-us-west-1.amazonaws.com"
 stream_processor = "stream_processorHW2"
 ownerEmail = "xiaomi388@gmail.com"
 ownerPhoneNumber = "+16622280114"
-#Note:
+
+
 '''s3: us-east-1, 
 collection(Faces): us-east-1, 
 KVS(stream0): us-east-1, 
