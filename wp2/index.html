@@ -24,7 +24,7 @@
             alert("The OTP provided is invalid, permission denied.");
         }
         function success(name){
-            var succText = "Welcome back " + name + "!";
+            var succText = "Welcome " + name + "!";
             alert(succText);
         }
 
@@ -39,14 +39,14 @@
             otp : otp_raw
           }
           sdk.openDoorPost({}, data, {})
-          .then((response) => {
-            return success(response.data.visitor.name)
-          })
-          .catch((error) => {
-            console.log(error);
-            return permissionDenied()
-          });
-        }
+            .then((response) => {
+              return success(response.data.visitor.name)
+            })
+            .catch((error) => {
+              console.log(error);
+              return permissionDenied()
+            });
+          }
     </script>
   </head>
 
