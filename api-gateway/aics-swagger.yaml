@@ -23,11 +23,11 @@ paths:
         '403':
           description: permission denied
           schema:
-            $ref: '#/definitions/Response'
+            $ref: '#/definitions/OpenDoorResponse'
         '200':
           description: successfully opened the door
           schema:
-            $ref: '#/definitions/Response'
+            $ref: '#/definitions/OpenDoorResponse'
   /visitors:
     post:
       summary: get the basic information of a visitor
@@ -43,18 +43,28 @@ paths:
         '201':
           description: updated visitor succeefully
           schema:
-            $ref: '#/definitions/Response'
+            $ref: '#/definitions/VisitorResponse'
         '409':
           description: the face id is existed
           schema:
-            $ref: '#/definitions/Response'
+            $ref: '#/definitions/VisitorResponse'
 definitions:
   OpenDoorRequest:
     type: object
     properties:
       otp:
         type: string
-  Response:
+  OpenDoorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+      visitor:
+        type: object
+        properties:
+          name:
+            type: string
+  VisitorResponse:
     type: object
     properties:
       error:

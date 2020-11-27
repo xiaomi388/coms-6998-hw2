@@ -18,7 +18,7 @@ def lambda_handler(event, context):
             "body": json.dumps({"error": "permission denied"})
         }
     face_id = rec["Items"][0]["faceId"]
-    table.delete_item(Key={"faceId": face_id, "passcode": body["otp"]})
+    table.delete_item(Key={"faceId": face_id})
     table = dynamodb.Table("visitors")
     rec = table.query(KeyConditionExpression=Key("faceId").eq(face_id))
     name = rec["Items"][0]["name"]
@@ -32,5 +32,4 @@ def lambda_handler(event, context):
 
 
 if __name__ == "__main__":
-    print(lambda_handler({"body": json.dumps({"otp": "73663"})}, None))
-
+    print(lambda_handler({"body": json.dumps({"otp": "0065"})}, None))

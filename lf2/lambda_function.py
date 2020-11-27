@@ -32,7 +32,7 @@ def lambda_handler(event, context):
         "faceId": body["face_id"],
         "name": body["name"],
         "phoneNumber": body["phone_number"],
-        "photos": []
+        "photos": rec["Items"][0]["photos"]
     }
     table.put_item(Item=item)
 
@@ -53,9 +53,9 @@ def lambda_handler(event, context):
         break
 
     # send sms
-    sns = boto3.client("sns", region_name="us-west-2")
+    sns = boto3.client("sns", region_name="us-east-1")
     sns.publish(PhoneNumber=body["phone_number"],
-                Message=f"You are the one on file, please use the one time passcode. : {otp} "
+                Message=f"You are the one on file, please use the one time passcode: {otp}. "
                         f"The pass code will expire in 5 minutes")
     return {
         "statusCode": 201,
@@ -68,4 +68,3 @@ def lambda_handler(event, context):
 
 if __name__ == "__main__":
     print(lambda_handler({"body": json.dumps({"face_id": "1234", "phone_number": "+16622280114", "name": "yufan"})}, None))
-
