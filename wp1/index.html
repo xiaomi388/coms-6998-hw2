@@ -27,7 +27,7 @@
             alert("ERROR: " + error);
         }
         function phoneNumberError() {
-            alert("The phone number should be 10 digit");
+            alert("The phone number should be in the form of +11234567890");
         }
         function myFunction() {
           var sdk = apigClientFactory.newClient({});
@@ -38,7 +38,7 @@
             return;
           }
 
-          var pattern = /[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/
+          var pattern = /\+1[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/
           if(!pattern.test(phone_number_raw)){
             return phoneNumberError();
           }
@@ -73,7 +73,7 @@
       </div>
       <div class='inputs'>
         <div class="input_text">Phone Number &emsp;</div>
-        <input type="tel" id="phone_number" class="input_box" placeholder="1234567890" name="phone_number" pattern="[0-9]{10}" size="12" required>
+        <input type="tel" id="phone_number" class="input_box" placeholder="+11234567890" name="phone_number" size="12" required>
       </div>
       <button class="btn btn-lg btn-primary btn-block" onclick="myFunction()" type="submit">Submit</button>
     </div>
